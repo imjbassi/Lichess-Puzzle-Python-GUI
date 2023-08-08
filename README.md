@@ -1,5 +1,6 @@
 # Lichess-Puzzle-Python-GUI
 The Chess Puzzle App is a simple interactive application built using Python and the Tkinter library. It allows users to solve chess puzzles by providing the correct sequence of moves for a given puzzle position. The app loads puzzle data from a CSV file and displays the chessboard along with the puzzle information. Users can input their moves and receive feedback on whether their moves are correct or not. The app also provides navigation buttons to move through the puzzle's moves step by step.
+- This was a project I worked on entirely on my Mac, getting libraries and everything to work to prove I can work Python on this machine was the main goal.
 
 ## Features
 - Load chess puzzles from a CSV file.
@@ -40,3 +41,21 @@ The puzzles used in this app are for educational purposes and were obtained from
 
 ## License
 This project is licensed under the MIT License.
+
+## Extra
+Libraries I went through this project:
+
+pip install pandas
+pip install python-chess
+pip install python-lichess
+pip install cairosvg chess python-chess pillow
+pip install cairosvg
+
+- It seemed like the cairocffi library was missing so I tried installing cairocffi and its required system libraries by running:
+
+brew install cairo
+sudo apt-get install libcairo2-dev
+conda install -c conda-forge cairocffi (ultimately worked for me)
+brew install webbrowser
+brew install --cask edfbrowser
+pip install Pillow-SVG
