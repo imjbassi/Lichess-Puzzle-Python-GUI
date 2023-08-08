@@ -1,4 +1,6 @@
 # Lichess-Puzzle-Python-GUI
+* Mainly unfinished but made this repository to upload and come back to this project.
+
 The Chess Puzzle App is a simple interactive application built using Python and the Tkinter library. It allows users to solve chess puzzles by providing the correct sequence of moves for a given puzzle position. The app loads puzzle data from a CSV file and displays the chessboard along with the puzzle information. Users can input their moves and receive feedback on whether their moves are correct or not. The app also provides navigation buttons to move through the puzzle's moves step by step.
 - This was a project I worked on entirely on my Mac, getting libraries and everything to work to prove I can work Python on this machine was the main goal.
 
