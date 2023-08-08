@@ -13,6 +13,9 @@ The Chess Puzzle App is a simple interactive application built using Python and 
 ## Prerequisites
 - Python3
 - Tkinter
+- Lichess CSV Library https://database.lichess.org/#puzzles
+
+- brew install zstd then use zstd -d yourfilename.zst to get a CSV
 
 ## Installation
 1. Clone this repository to your local machine using: `git clone https://github.com/yourusername/Lichess-Puzzle-Python-GUI
