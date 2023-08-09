@@ -141,5 +141,5 @@ class ChessPuzzleApp:
         self.next_button.config(state=tk.NORMAL)
 
 if __name__ == "__main__":
-    csv_file = "/Users/jaiveerbassi/Downloads/Chess/lichess_db_puzzle.csv"
+    csv_file = "lichess_db_puzzle.csv"
     app = ChessPuzzleApp(csv_file)
