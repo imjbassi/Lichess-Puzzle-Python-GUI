@@ -56,11 +56,4 @@ pip install python-lichess
 pip install cairosvg chess python-chess pillow
 pip install cairosvg
 
-- It seemed like the cairocffi library was missing so I tried installing cairocffi and its required system libraries by running:
-
-brew install cairo
-sudo apt-get install libcairo2-dev
-conda install -c conda-forge cairocffi (ultimately worked for me)
-brew install webbrowser
-brew install --cask edfbrowser
-pip install Pillow-SVG
+- It seemed like the cairocffi library was missing so I tried installing cairocffi and its required system libraries by running: brew install cairo sudo apt-get install libcairo2-dev conda install -c conda-forge cairocffi (ultimately worked for me) brew install web-browser brew install --cask edfbrowser pip install Pillow-SVG
