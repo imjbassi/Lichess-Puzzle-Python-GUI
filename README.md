@@ -57,3 +57,17 @@ pip install cairosvg chess python-chess pillow
 pip install cairosvg
 
 - It seemed like the cairocffi library was missing so I tried installing cairocffi and its required system libraries by running: brew install cairo sudo apt-get install libcairo2-dev conda install -c conda-forge cairocffi (ultimately worked for me) brew install web-browser brew install --cask edfbrowser pip install Pillow-SVG
+- 
+
+
+Windows
+
+It seems like you're encountering an issue with the cairosvg library and its dependency on the Cairo graphics library. The error message suggests that the "cairo-2" library or its variants cannot be found, which means the Cairo library is missing or not properly installed on your system.
+
+To resolve this issue, you'll need to install the Cairo graphics library. Here's how you can do it:
+
+Windows:
+You can try installing the required libraries using pre-built binary packages. You can download the required files from the GTK for Windows Runtime Environment Installer:[ https://www.gtk.org/download/windows.php](https://www.gtk.org/docs/installations/windows/#using-gtk-from-msys2-packages)
+After installing GTK, make sure to add its bin directory to your system's PATH environment variable.
+
+
