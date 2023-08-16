@@ -1,6 +1,6 @@
 # Lichess Puzzle GUI in Python
 
-<sup>This was a project I worked on entirely on my Mac, getting libraries and everything to work to prove I can work Python on this machine was the main goal.</sup
+<sup>This was a project I worked on entirely on my Mac, getting libraries and everything to work to prove I can work Python on this machine was the main goal.</sup>
 
 The Chess Puzzle App is a simple interactive application built using Python and the Tkinter library allowing you to look at different puzzles in the Lichess puzzle databse.
 
