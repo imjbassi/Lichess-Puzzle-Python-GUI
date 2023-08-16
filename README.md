@@ -30,7 +30,8 @@ This Python program loads chess puzzles from a CSV file, displays them on a grap
 
 1. Run the app using Python: `python chess_puzzle_app.py`
 2. Make sure the file path for the CSV is set after extracting from the Lichess puzzle database
-   -<img src="https://raw.githubusercontent.com/imjbassi/Lichess-Puzzle-Python-GUI/main/Images/LichessPuzzleDB.png" width="400">
+   
+   - <img src="https://raw.githubusercontent.com/imjbassi/Lichess-Puzzle-Python-GUI/main/Images/LichessPuzzleDB.png" width="400">
 
 
 <img src="https://raw.githubusercontent.com/imjbassi/Lichess-Puzzle-Python-GUI/main/Images/Terminal%20Example.png" width="400">
