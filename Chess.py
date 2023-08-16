@@ -6,46 +6,31 @@ import chess
 import chess.svg
 from cairosvg import svg2png
 
+# Function to load puzzle data from a CSV file
 def load_puzzles_from_csv(csv_file):
     df = pd.read_csv(csv_file)
-    return df   
+    return df
 
+# Function to preprocess a UCI move
 def preprocess_uci_move(uci_move):
     return ''.join(filter(str.isalnum, uci_move))
 
+# Function to pick a random puzzle from the puzzle data
 def pick_random_puzzle(df):
     random_index = random.randint(0, len(df) - 1)
     return df.iloc[random_index]
 
-def convert_uci_to_san(board, uci_move):
-    try:
-        move = chess.Move.from_uci(uci_move)
-        if move in board.legal_moves:
-            san_move = board.san(move)
-            return san_move
-    except ValueError:
-        pass
-    return ""
-
-def display_chessboard(fen, uci_moves, canvas, to_play_color):
+# Function to display the chessboard
+def display_chessboard(fen, canvas):
     board = chess.Board(fen)
-    
-    for uci_move in uci_moves:
-        move = chess.Move.from_uci(uci_move)
-        if move in board.legal_moves:
-            board.push(move)
-
-    # Determine if the board should be flipped
-    flipped = to_play_color == "black"
-    
-    svg_data = chess.svg.board(board=board, size=250, flipped=flipped)
+    svg_data = chess.svg.board(board=board, size=250)
     png_data = svg2png(bytestring=svg_data.encode('utf-8'))
 
     tk_img = ImageTk.PhotoImage(data=png_data)
     canvas.create_image(0, 0, anchor=tk.NW, image=tk_img)
     canvas.image = tk_img
 
-
+# Chess Puzzle App class
 class ChessPuzzleApp:
     def __init__(self, csv_file):
         self.puzzle_data = load_puzzles_from_csv(csv_file)
@@ -53,93 +38,79 @@ class ChessPuzzleApp:
         self.root.title("Chess Puzzle")
         self.root.geometry("400x600")
 
+        self.board = chess.Board()
+        self.move_index = 0
+
         self.canvas = tk.Canvas(self.root, width=300, height=300)
         self.canvas.pack()
 
-        self.user_input = tk.StringVar()
-        self.entry = tk.Entry(self.root, textvariable=self.user_input)
-        self.entry.pack()
-
-        self.result_label = tk.Label(self.root, text="")
-        self.result_label.pack()
-
-        self.fen_label = tk.Label(self.root, text="")
-        self.fen_label.pack()
-
-        self.turn_label = tk.Label(self.root, text="")
-        self.turn_label.pack()
-
+        # Next Move button
         self.next_button = tk.Button(self.root, text="Next Move", command=self.load_next_move, state=tk.DISABLED)
         self.next_button.pack()
 
+        # Previous Move button
         self.prev_button = tk.Button(self.root, text="Previous Move", command=self.load_prev_move, state=tk.DISABLED)
         self.prev_button.pack()
 
+        # Next Puzzle button
         self.next_puzzle_button = tk.Button(self.root, text="Next Puzzle", command=self.load_next_puzzle)
         self.next_puzzle_button.pack()
 
-        self.check_button = tk.Button(self.root, text="Check Move", command=self.check_move)
-        self.check_button.pack()
-
+        # Load the first puzzle
         self.load_next_puzzle()
         self.root.mainloop()
 
-    def check_move(self):
-        user_move = self.user_input.get()
-        if user_move in self.san_moves:
-            self.result_label.config(text="Correct move!")
-        else:
-            self.result_label.config(text=f"Incorrect move. The correct move(s) is/are: {', '.join(self.san_moves)}")
-
+    # Function to update the displayed moves and chessboard
     def update_moves(self):
-        board = chess.Board(self.fen)
-        to_play_color = "white" if self.fen.split()[1] == 'b' else "black"
-        self.turn_label.config(text=f"{to_play_color.capitalize()} to move")
-        display_chessboard(board.fen(), self.uci_moves[:self.move_index], self.canvas, to_play_color)
-        
-        if self.move_index >= len(self.uci_moves):
+        to_play_color = "black" if self.fen.split()[1] == 'w' else "white"
+        self.display_current_board(to_play_color)
+
+        if self.move_index >= len(self.uci_moves) - 1:
             self.next_button.config(state=tk.DISABLED)
         else:
             self.next_button.config(state=tk.NORMAL)
-        
+
         if self.move_index <= 0:
             self.prev_button.config(state=tk.DISABLED)
         else:
             self.prev_button.config(state=tk.NORMAL)
 
+    # Function to display the current board state
+    def display_current_board(self, to_play_color):
+        board = chess.Board(self.fen)
+        for uci_move in self.uci_moves[:self.move_index + 1]:
+            move = chess.Move.from_uci(uci_move)
+            if move in board.legal_moves:
+                board.push(move)
+        display_chessboard(board.fen(), self.canvas)
+
+    # Function to load the next puzzle
     def load_next_puzzle(self):
         self.puzzle = pick_random_puzzle(self.puzzle_data)
         self.fen = self.puzzle.get('FEN', "")
         self.uci_moves = [preprocess_uci_move(move) for move in self.puzzle.get('Moves', "").split()]
-        self.san_moves = [convert_uci_to_san(chess.Board(self.fen), uci_move) for uci_move in self.uci_moves if
-                          convert_uci_to_san(chess.Board(self.fen), uci_move)]
+
         self.move_index = 0
         self.next_button.config(state=tk.NORMAL)
         self.prev_button.config(state=tk.DISABLED)
-        self.fen_label.config(text=f"FEN: {self.fen}")
+
+        # Update the board's state after updating puzzle data
         self.update_moves()
 
-    def check_move(self):
-        user_move = self.user_input.get()
-        if user_move in self.san_moves:
-            self.result_label.config(text="Correct move!")
-        else:
-            self.result_label.config(text=f"Incorrect move. The correct move(s) is/are: {', '.join(self.san_moves)}")
-    
+        # Print the FEN in the terminal
+        print("Current FEN:", self.fen)
+
+    # Function to load the next move
     def load_next_move(self):
         self.move_index += 1
         self.update_moves()
-        if self.move_index >= len(self.uci_moves):
-            self.next_button.config(state=tk.DISABLED)
-        self.prev_button.config(state=tk.NORMAL)
 
+    # Function to load the previous move
     def load_prev_move(self):
         self.move_index -= 1
         self.update_moves()
-        if self.move_index <= 0:
-            self.prev_button.config(state=tk.DISABLED)
-        self.next_button.config(state=tk.NORMAL)
 
+# Entry point of the program
 if __name__ == "__main__":
-    csv_file = "lichess_db_puzzle.csv"
+    csv_file = "/Users/jaiveerbassi/Downloads/lichess_db_puzzle.csv"  # Change this to the path of your CSV file
     app = ChessPuzzleApp(csv_file)
