@@ -24,6 +24,8 @@ This Python program loads chess puzzles from a CSV file, displays them on a grap
 2. Install required dependencies/libraries:
 - Libraries: `pip install -r requirements.txt`
 - Download https://database.lichess.org/#puzzles and `brew install zstd` then use `zstd -d yourfilename.zst` to get a CSV
+  - Puzzles are formatted as standard CSV. The fields are as follows: PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,OpeningTags
+
 
 ## Usage
 <img src="https://raw.githubusercontent.com/imjbassi/Lichess-Puzzle-Python-GUI/main/Images/GUI%20Screenshot.png" width="300">
@@ -42,12 +44,16 @@ This Python program loads chess puzzles from a CSV file, displays them on a grap
 
 ## Potential Mac Problems
 If it seems like the cairocffi library try installing cairocffi and its required system libraries by running
-- brew install cairo
-- sudo apt-get install libcairo2-dev
-- conda install -c conda-forge cairocffi (ultimately worked for me)
-- brew install web-browser
-- brew install --cask edfbrowser
-- pip install Pillow-SVG
+- `brew install cairo`
+- `sudo apt-get install libcairo2-dev`
+- `conda install -c conda-forge cairocffi` (ultimately worked for me)
+- `brew install web-browser`
+- `brew install --cask edfbrowser`
+- `pip install Pillow-SVG`
+
+If you get "ImportError: Missing optional dependency 'zstandard' use `pip install zstandard`
+
+"zsh: permission denied: lichess_db_puzzle.csv"  use `chmod +x lichess_db_puzzle.csv`
 
 ## Documenting my Windows Problems
 
