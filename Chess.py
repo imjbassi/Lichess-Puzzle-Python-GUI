@@ -112,5 +112,5 @@ class ChessPuzzleApp:
 
 # Entry point of the program
 if __name__ == "__main__":
-    csv_file = "/Users/jaiveerbassi/Downloads/lichess_db_puzzle.csv"  # Change this to the path of your CSV file
+    csv_file = "lichess_db_puzzle.csv"  # Change this to the path of your CSV file
     app = ChessPuzzleApp(csv_file)
